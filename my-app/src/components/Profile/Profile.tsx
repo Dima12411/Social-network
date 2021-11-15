@@ -4,14 +4,14 @@ import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = () => {
     return (
-        <div className={s.content}>
+        <div>
             <div>
-                <img src="https://healingatthecross.com/wp-content/uploads/2017/08/pexels-photo-248797.jpeg" />
+                <img src="https://healingatthecross.com/wp-content/uploads/2017/08/pexels-photo-248797.jpeg"/>
             </div>
             <div>
                 ava + description
             </div>
-            <MyPosts />
+            <MyPosts/>
         </div>
     )
 }

@@ -6,7 +6,7 @@ type PostType = {
     amount: number
 }
 
-const Post = (props:PostType) => {
+const Post: React.FC<PostType> = (props) => {
     return (
         <div className={s.item}>
             <img
