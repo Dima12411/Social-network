@@ -1,17 +1,18 @@
 import React from 'react';
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from './ProfileInfo/ProfileInfo';
+import {postsType} from "../../index";
+import {postsProps} from "../../App";
 
-const Profile = () => {
+
+
+const Profile = (props: postsProps) => {
+
     return (
         <div>
-            <div>
-                <img src="https://healingatthecross.com/wp-content/uploads/2017/08/pexels-photo-248797.jpeg"/>
-            </div>
-            <div>
-                ava + description
-            </div>
-            <MyPosts/>
+            <ProfileInfo/>
+            <MyPosts posts={props.posts}/>
         </div>
     )
 }

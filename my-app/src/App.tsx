@@ -8,8 +8,15 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
+import {postsType} from "./index";
 
-function App() {
+export type postsProps = {
+   posts: postsType[]
+}
+
+
+function App(props: postsProps) {
+
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -17,8 +24,8 @@ function App() {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path='/dialogs/*' element={<Dialogs/>}/>
-                        <Route path='/profile/*' element={<Profile/>}/>
+                        <Route path='/dialogs/*' element={<Dialogs />}/>
+                        <Route path='/profile/*' element={<Profile posts={props.posts}/>}/>
                         <Route path='/music' element={<Music/>}/>
                         <Route path='/news' element={<News/>}/>
                         <Route path='/settings' element={<Settings/>}/>
