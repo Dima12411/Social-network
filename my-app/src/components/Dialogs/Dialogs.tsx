@@ -3,31 +3,16 @@ import s from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
+import {DialogsPropsType} from "../../redux/state";
 
+type DialogsProps = {
+state: DialogsPropsType
+}
 
-const Dialogs = () => {
+const Dialogs = (props: DialogsProps) => {
 
-
-    let dialogs = [
-        {id: 1, name: "Dima"},
-        {id: 2, name: "Andrey"},
-        {id: 3, name: "Lera"},
-        {id: 4, name: "Maksim"},
-        {id: 5, name: "Lesha"},
-        {id: 6, name: "Anton"}
-    ]
-
-    let dialogsElements = dialogs.map(d => <DialogItem id={d.id} name={d.name}/>)
-
-    let messages = [
-        {id: 1, message: "Hello!"},
-        {id: 2, message: "How are you?"},
-        {id: 3, message: "Okay"},
-        {id: 4, message: "Okay"},
-        {id: 5, message: "Okay"}
-    ]
-
-    let messagesElements = messages.map(m => <Message message={m.message}/>)
+    let dialogsElements = props.state.dialogs.map(d => <DialogItem id={d.id} name={d.name}/>)
+    let messagesElements = props.state.messages.map(m => <Message message={m.message}/>)
 
 
     return (

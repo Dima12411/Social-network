@@ -3,22 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import state from "./redux/state";
 
-export type postsType = {
-    id: number
-    message: string
-    amount: number
-}
-let posts: postsType[] = [
-    {id: 1, message: "Hi, how are you?" , amount: 15 },
-    {id: 2, message: "It's my first posts" , amount: 20 },
-    {id: 3, message: "Hello!" , amount: 20 },
-    {id: 4, message: "What's yours name?" , amount: 20 }
-]
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App posts={posts}/>
+    <App
+        state={state}
+    />
   </React.StrictMode>,
   document.getElementById('root')
 );
