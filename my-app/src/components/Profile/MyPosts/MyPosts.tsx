@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {RefObject} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {PostsType} from "../../../redux/state";
+import {PostsType, PostType} from "../../../redux/state";
 
 type MyPostsProps = {
-    state: PostsType
+    posts: PostType[]
+    addPost: (postMessage: string) => void
 }
 
 const MyPosts = (props: MyPostsProps) => {
-
-
-    let postsElements = props.state.posts.map(p => <Post message={p.message} amount={p.amount}/>)
+    let postsElements = props.posts.map(p => <Post message={p.message} amount={p.amount}/>)
+    let newPostElement: RefObject<HTMLTextAreaElement>  = React.createRef();
+    let addPost = () => {
+        let text = newPostElement.current?.value;
+        if (text) props.addPost(text)
+        if (newPostElement.current) newPostElement.current.value = ''
+    }
 
     return (
         <div>
@@ -21,10 +26,11 @@ const MyPosts = (props: MyPostsProps) => {
                 </div>
                 <div>
                     <div>
-                        <textarea name="post"></textarea>
+                        <textarea ref={newPostElement} placeholder={'Write your message'}></textarea>
                     </div>
                     <div>
-                        <button>Add post</button>
+                        <button onClick={addPost}>Add post
+                        </button>
                     </div>
                 </div>
                 <div className={s.posts}>

@@ -1,5 +1,5 @@
 import s from "../Dialogs.module.css";
-import React from "react";
+import React, {RefObject} from "react";
 
 type messageProps = {
     message: string
@@ -7,7 +7,11 @@ type messageProps = {
 
 const Message = (props: messageProps) => {
     return (
-        <div className={s.message}>{props.message}</div>
+        <div>
+            <div>
+                <div className={s.message}>{props.message}</div>
+            </div>
+        </div>
     )
 }
 
