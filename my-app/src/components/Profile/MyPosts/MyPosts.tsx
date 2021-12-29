@@ -1,7 +1,7 @@
-import React, {ChangeEvent, RefObject} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {ProfilePagePropsType, PostType, updateNewPostText} from "../../../redux/state";
+import {PostType} from "../../../redux/state";
 
 type MyPostsProps = {
     posts: PostType[]
@@ -19,8 +19,6 @@ const MyPosts = (props: MyPostsProps) => {
     const onPostChange = () => {
         let text = newPostElement.current?.value;
         if (text) props.updateNewPostText(text)
-
-
     }
 
     return (

@@ -7,7 +7,7 @@ type messageProps = {
 
 const Message = (props: messageProps) => {
     return (
-        <div>
+        <div className={s.message}>
             <div>
                 <div className={s.message}>{props.message}</div>
             </div>
