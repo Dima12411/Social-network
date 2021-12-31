@@ -12,7 +12,7 @@ export type PostType = {
     amount: number
 }
 export type ProfilePagePropsType = {
-    posts: PostType[]
+    posts: Array<PostType>
     newPostText: string
 }
 export type DialogsPropsType = {
@@ -48,9 +48,9 @@ export const store: StorType = {
                 {id: 1, message: "Hi, how are you?", amount: 15},
                 {id: 2, message: "It's my first posts", amount: 20},
                 {id: 3, message: "Hello!", amount: 20},
-                {id: 4, message: "What's yours name?", amount: 20}
+                {id: 4, message: "What's yours name?", amount: 20},
             ],
-            newPostText: "Write your message",
+            newPostText: "Write your message"
         },
         dialogsPage: {
             dialogs: [
@@ -81,20 +81,31 @@ export const store: StorType = {
         this._callSubscriber = callback;
     },
     dispatch(action: ActionsTypes) {
-        debugger;
         if (action.type === "ADD-POST") {
-            const newPost: PostType = {
+            let newPost: PostType = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
                 amount: 0
             };
             this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = ""
+            this._state.profilePage.newPostText = "";
             this._callSubscriber(this._state);
         } else if (action.type === "UPDATE-NEW-POST-TEXT") {
             this._state.profilePage.newPostText = action.newText;
             this._callSubscriber(this._state);
         }
+    }
+}
+
+export const addPostAC = () => {
+    return {
+        type: "ADD-POST"
+    }
+}
+export const updateNewPostTextAC = (text: string) => {
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: text
     }
 }
 

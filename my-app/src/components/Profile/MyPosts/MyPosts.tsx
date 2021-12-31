@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {PostType} from "../../../redux/state";
+import {addPostAC, PostType, updateNewPostTextAC} from "../../../redux/state";
 
 type MyPostsProps = {
     posts: PostType[]
@@ -9,18 +9,19 @@ type MyPostsProps = {
     newPostText: string
 }
 
+
 const MyPosts = (props: MyPostsProps) => {
-    const postsElements = props.posts.map(p => <Post id={p.id} message={p.message} amount={p.amount}/>)
+    const postsElements = props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} amount={p.amount}/>)
     const newPostElement = React.createRef<HTMLTextAreaElement>();
     const addPost = () => {
-        props.dispatch({type: "ADD-POST"})
+        props.dispatch(addPostAC())
     }
-    const onPostChange = () => {
-        debugger;
-        let text = newPostElement.current?.value;
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let text = e.currentTarget.value;
         text ?
-            props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: text}) :
-            props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: ''})
+            props.dispatch(updateNewPostTextAC(text)) :
+            props.dispatch(updateNewPostTextAC(""))
+
     }
     return (
         <div>
