@@ -1,47 +1,44 @@
-export type MessageType = {
+import dialogsReducer, {ActionsDialogsType} from "./dialogsReducer";
+import profileReducer, {ActionsProfileType} from "./profileReducer";
+
+type MessageType = {
     id: number
     message: string
 }
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 }
-export type PostType = {
+type PostType = {
     id: number
     message: string
     amount: number
 }
-export type ProfilePagePropsType = {
+type ProfilePagePropsType = {
     posts: Array<PostType>
     newPostText: string
 }
-export type DialogsPropsType = {
-    dialogs: DialogType[]
-    messages: MessageType[]
+type DialogsPropsType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    newMessageText: string
 }
-export type SidebarType = {}
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePagePropsType
     dialogsPage: DialogsPropsType
 
 }
-export type StorType = {
+type ActionsTypes = ActionsDialogsType | ActionsProfileType
+type StoreType = {
     _state: RootStateType
     subscribe: (callback: (state: RootStateType) => void) => void
     _callSubscriber: (state: RootStateType) => void
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
-type AddPostActionType = {
-    type: "ADD-POST"
-}
-type UpdateNewPostTextActionType = {
-    type: "UPDATE-NEW-POST-TEXT"
-    newText: string
-}
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
 
-export const store: StorType = {
+
+export const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -49,8 +46,9 @@ export const store: StorType = {
                 {id: 2, message: "It's my first posts", amount: 20},
                 {id: 3, message: "Hello!", amount: 20},
                 {id: 4, message: "What's yours name?", amount: 20},
+
             ],
-            newPostText: "Write your message"
+            newPostText: "",
         },
         dialogsPage: {
             dialogs: [
@@ -68,7 +66,8 @@ export const store: StorType = {
                 {id: 4, message: "Okay"},
                 {id: 5, message: "Okay"},
                 {id: 6, message: "Okay"},
-            ]
+            ],
+            newMessageText: "",
         },
     },
     getState() {
@@ -80,34 +79,15 @@ export const store: StorType = {
     subscribe(callback: (state: RootStateType) => void) {
         this._callSubscriber = callback;
     },
-    dispatch(action: ActionsTypes) {
-        if (action.type === "ADD-POST") {
-            let newPost: PostType = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                amount: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = "";
-            this._callSubscriber(this._state);
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this._state);
-        }
+    dispatch(action) {
+        //profileReducer(this._state.profilePage, action)
+        //dialogsReducer(this._state.dialogsPage, action)
+
+        this._callSubscriber(this._state)
     }
 }
 
-export const addPostAC = () => {
-    return {
-        type: "ADD-POST"
-    }
-}
-export const updateNewPostTextAC = (text: string) => {
-    return {
-        type: "UPDATE-NEW-POST-TEXT",
-        newText: text
-    }
-}
+
 
 console.log(store._state.profilePage.newPostText)
 

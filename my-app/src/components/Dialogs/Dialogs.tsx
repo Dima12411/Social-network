@@ -1,22 +1,21 @@
-import React, {RefObject} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {DialogsPropsType} from "../../redux/state";
+import {DialogsPropsType} from "./DialogsContainer";
 
-type DialogsProps = {
-    state: DialogsPropsType
-}
+const Dialogs = (props: DialogsPropsType) => {
 
-const Dialogs = (props: DialogsProps) => {
+    let dialogsElements = props.dialogs.map(d => <DialogItem id={d.id} name={d.name}/>)
+    let messagesElements = props.messages.map(m => <Message message={m.message}/>)
+    //let newMessageElements: RefObject<HTMLTextAreaElement> = React.createRef();
 
-    let dialogsElements = props.state.dialogs.map(d => <DialogItem id={d.id} name={d.name}/>)
-    let messagesElements = props.state.messages.map(m => <Message message={m.message}/>)
-    let newMessageElements: RefObject<HTMLTextAreaElement> = React.createRef();
-    let addMessage = () => {
-        let text = newMessageElements.current?.value;
-        alert(text);
+
+    let onChangeHandler = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        props.updateNewMessageBody(e.currentTarget.value)
+    }
+    let onAddMessage = () => {
+        props.addMessage()
     }
 
     return (
@@ -28,10 +27,16 @@ const Dialogs = (props: DialogsProps) => {
             </div>
             <div className={s.messages}>
 
-                {messagesElements}
+                <div>{messagesElements}</div>
                 <div>
-                    <textarea ref={newMessageElements}></textarea>
-                    <button onClick={addMessage}>Add message</button>
+                    <textarea placeholder="Enter your message"
+                              value={props.newMessageText}
+                              onChange={onChangeHandler}>
+
+                    </textarea>
+                    <div>
+                        <button onClick={onAddMessage}>Add message</button>
+                    </div>
                 </div>
             </div>
         </div>
