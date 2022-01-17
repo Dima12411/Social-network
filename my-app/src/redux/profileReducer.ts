@@ -21,7 +21,8 @@ const profileReducer = (state:InitialStateType = initialState, action: ActionsPr
         case "ADD-POST": {
             return {
                 ...state,
-                posts: [{id: 5, message: state.newPostText, amount: 0,}, ...state.posts]
+                posts: [{id: 5, message: state.newPostText, amount: 0,}, ...state.posts],
+                newPostText: '',
             }
         }
         case "UPDATE-NEW-POST-TEXT": {

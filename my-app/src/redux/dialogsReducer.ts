@@ -33,7 +33,8 @@ const dialogsReducer = (state:InitialStateType = initialState, action: ActionsDi
         case "ADD-NEW-MESSAGE": {
             return {
                 ...state,
-                messages: [{id: 7, message: state.newMessageText}, ...state.messages]
+                messages: [{id: 7, message: state.newMessageText}, ...state.messages],
+                newMessageText: '',
             }
         }
         case "ON-CHANGE-MESSAGE": {
