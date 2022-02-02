@@ -4,19 +4,48 @@ export type PostType = {
     amount: number
 }
 export type InitialStateType = typeof initialState
+type PhotoProfileType = {
+    small: string | null
+    large: string | null
+}
+type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
+type ProfilePropsType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ContactsType
+    photos: PhotoProfileType
+}
+export type ProfileType = ProfilePropsType | null
+export type InitialStatePropsType = {
+    posts: Array<PostType>
+    newPostText: string
+    profile: ProfileType
+}
 
-let initialState = {
+let initialState: InitialStatePropsType = {
     posts: [
         {id: 1, message: "Hi, how are you?", amount: 15},
         {id: 2, message: "It's my first posts", amount: 20},
         {id: 3, message: "Hello!", amount: 20},
         {id: 4, message: "What's yours name?", amount: 20},
-    ] as Array<PostType>,
+    ],
     newPostText: "",
+    profile: null,
 }
 
 
-const profileReducer = (state:InitialStateType = initialState, action: ActionsProfileType): InitialStateType => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionsProfileType): InitialStateType => {
     switch (action.type) {
         case "ADD-POST": {
             return {
@@ -30,8 +59,12 @@ const profileReducer = (state:InitialStateType = initialState, action: ActionsPr
                 ...state,
                 newPostText: action.newText
             }
-            //     state.newPostText = action.newText
-            // return state
+        }
+        case "SET-USER-PROFILE": {
+            return {
+                ...state,
+                profile: action.payload
+            }
         }
         default:
             return state
@@ -39,9 +72,10 @@ const profileReducer = (state:InitialStateType = initialState, action: ActionsPr
 }
 
 
-export type ActionsProfileType = AddPostType | UpdateNewPostTextType
+export type ActionsProfileType = AddPostType | UpdateNewPostTextType | SetUserProfileType
 type AddPostType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextAC>
+type SetUserProfileType = ReturnType<typeof setUserProfile>
 
 
 export const addPostAC = () => {
@@ -54,6 +88,13 @@ export const updateNewPostTextAC = (text: string) => {
     return {
         type: "UPDATE-NEW-POST-TEXT",
         newText: text
+    } as const
+}
+
+export const setUserProfile = (profile: any) => {
+    return {
+        type: 'SET-USER-PROFILE',
+        payload: profile
     } as const
 }
 
